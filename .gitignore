@@ -1,0 +1,207 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# C extensions
+*.so
+
+# Distribution / packaging
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib602/
+parts/
+sdist/
+var/
+wheels/
+pip-wheel-metadata/
+share/python-wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# PyInstaller
+# Обычно Django производит статический контент в директорию static_root,
+# которая зачастую исключается из git для упрощения деплоя Heroku.
+# Если вы управляете статическим контентом Django через git, игнорируйте эту секцию.
+*.spec
+
+# Installer logs
+pip-log.txt
+pip-delete-this-directory.txt
+
+# Unit test / coverage reports
+htmlcov/
+.tox/
+.nox/
+.coverage
+.coverage.*
+.cache
+nosetests.xml
+coverage.xml
+*.cover
+*.py,cover
+.hypothesis/
+.pytest_cache/
+
+# Translations
+*.mo
+*.pot
+
+# Django stuff:
+*.log
+local_settings.py
+db.sqlite3
+db.sqlite3-journal
+
+# Flask stuff:
+instance/  # Thư mục instance của Flask, thường chứa file config nhạy cảm hoặc DB SQLite
+.webassets-cache
+.flask_session_cache
+
+# Scrapy stuff:
+.scrapy
+
+# Sphinx documentation
+docs/_build/
+
+# PyBuilder
+target/
+
+# Jupyter Notebook
+.ipynb_checkpoints
+
+# IPython
+profile_default/
+ipython_config.py
+
+# pyenv
+.python-version
+
+# PEP 582; __pypackages__ directory
+__pypackages__/
+
+# Celery stuff
+celerybeat-schedule
+celerybeat.pid
+
+# SageMath parsed files
+*.sage.py
+
+# Environments
+.env
+.venv
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+
+# Spyder project settings
+.spyderproject
+.spyproject
+
+# Rope project settings
+.ropeproject
+
+# mkdocs documentation
+/site
+
+# mypy
+.mypy_cache/
+.dmypy.json
+dmypy.json
+
+# Pyre type checker
+.pyre/
+
+# pytype
+.pytype/
+
+# Cython debug symbols
+cython_debug/
+
+# VS Code specific
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+*.code-workspace
+
+# PyCharm specific
+.idea/
+*.iml
+
+# Sublime Text specific
+*.sublime-project
+*.sublime-workspace
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Configuration files that may contain sensitive information
+# config.py # Cân nhắc nếu file này chứa thông tin nhạy cảm thực sự. Tốt hơn là dùng biến môi trường.
+secrets.ini
+*.ini # Cẩn thận với các file .ini khác nếu bạn có
+*.yaml # Cẩn thận với các file .yaml khác nếu bạn có
+*.env.* # Các file .env cụ thể cho môi trường (ví dụ: .env.local, .env.production)
+
+# Data files - Rất quan trọng cho dự án có phân tích dữ liệu
+# Bỏ qua toàn bộ thư mục nếu dữ liệu lớn và không nên đưa lên Git
+data/raw_music_files/
+data/processed_data/
+data/user_logs/
+
+# Hoặc bỏ qua các loại file dữ liệu lớn cụ thể nếu cần
+# *.csv
+# *.json # Nếu file json lớn
+# *.xml # Nếu file xml lớn
+# *.mp3
+# *.wav
+# *.flac
+# *.parquet
+# *.h5
+# *.pkl
+# *.model
+
+# Database files (ví dụ, nếu dùng SQLite cho test local)
+*.sqlite3
+*.db
+
+# Temporary files
+*.tmp
+*.swp
+*~
+
+# Log files (ngoài các log cụ thể của Django/Flask)
+logs/
+*.log.[0-9]*
+app.log
+
+# Generated static files (nếu bạn có bước build frontend riêng)
+# app/static/dist/
+
+# SSL certificates (không bao giờ commit private keys)
+*.pem
+*.key
+*.crt
+
+# Các file khác của dự án mà bạn không muốn đưa lên
+# Ví dụ:
+# presentation.pptx
+# notes.txt
+# temp_scripts/
