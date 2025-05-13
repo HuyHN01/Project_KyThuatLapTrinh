@@ -1,8 +1,8 @@
-"""Initial creation of song table
+"""Initial schema for new database
 
-Revision ID: 68fb47bd77cb
+Revision ID: da80514b82ee
 Revises: 
-Create Date: 2025-05-13 13:41:21.079753
+Create Date: 2025-05-13 18:59:05.627501
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = '68fb47bd77cb'
+revision = 'da80514b82ee'
 down_revision = None
 branch_labels = None
 depends_on = None
