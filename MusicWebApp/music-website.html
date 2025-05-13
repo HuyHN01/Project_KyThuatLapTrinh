@@ -1,0 +1,977 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zing MP3 - Website Nghe Nhạc</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #8c14fc;
+            --text-color: #fff;
+            --sidebar-bg: #121212;
+            --main-bg: #170f23;
+            --card-bg: #231b2e;
+            --secondary-text: #9b9b9b;
+            --hover-bg: #2a213a;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Arial', sans-serif;
+        }
+
+        body {
+            background-color: var(--main-bg);
+            color: var(--text-color);
+            display: flex;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        .sidebar {
+            width: 240px;
+            background-color: var(--sidebar-bg);
+            height: 100%;
+            overflow-y: auto;
+            flex-shrink: 0;
+            transition: all 0.3s ease;
+        }
+
+        .sidebar-header {
+            padding: 20px 25px;
+            display: flex;
+            align-items: center;
+        }
+
+        .logo {
+            color: #40e0d0;
+            font-size: 24px;
+            font-weight: bold;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+        }
+
+        .logo span {
+            color: var(--text-color);
+        }
+
+        .nav-item {
+            display: flex;
+            align-items: center;
+            padding: 12px 25px;
+            color: var(--text-color);
+            text-decoration: none;
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+
+        .nav-item:hover {
+            background-color: var(--hover-bg);
+        }
+
+        .nav-item.active {
+            background-color: var(--hover-bg);
+            border-left: 3px solid var(--primary-color);
+        }
+
+        .nav-item i {
+            margin-right: 15px;
+            font-size: 18px;
+            width: 24px;
+            text-align: center;
+        }
+
+        .live-badge {
+            font-size: 10px;
+            background-color: #f00;
+            color: white;
+            padding: 2px 5px;
+            border-radius: 3px;
+            margin-left: 10px;
+        }
+
+        .signin-prompt {
+            margin: 20px;
+            padding: 20px;
+            background-color: var(--card-bg);
+            border-radius: 8px;
+            text-align: center;
+        }
+
+        .signin-prompt p {
+            color: var(--text-color);
+            margin-bottom: 15px;
+            font-size: 14px;
+        }
+
+        .signin-btn {
+            background-color: transparent;
+            border: 1px solid var(--text-color);
+            color: var(--text-color);
+            padding: 8px 30px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 14px;
+            width: 100%;
+            transition: all 0.3s;
+        }
+
+        .signin-btn:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+
+        .main-content {
+            flex: 1;
+            overflow-y: auto;
+            padding: 20px;
+            padding-top: 0;
+        }
+
+        .header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 15px 0;
+            position: sticky;
+            top: 0;
+            background-color: var(--main-bg);
+            z-index: 100;
+        }
+
+        .search-bar {
+            display: flex;
+            align-items: center;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 8px 15px;
+            flex: 1;
+            max-width: 440px;
+        }
+
+        .search-bar i {
+            color: var(--text-color);
+            margin-right: 10px;
+        }
+
+        .search-input {
+            background: transparent;
+            border: none;
+            color: var(--text-color);
+            font-size: 14px;
+            width: 100%;
+            outline: none;
+        }
+
+        .search-input::placeholder {
+            color: var(--secondary-text);
+        }
+
+        .nav-buttons {
+            display: flex;
+            gap: 10px;
+        }
+
+        .nav-btn {
+            background: none;
+            border: none;
+            color: var(--text-color);
+            font-size: 18px;
+            cursor: pointer;
+            width: 32px;
+            height: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+        }
+
+        .nav-btn:hover {
+            background-color: var(--hover-bg);
+        }
+
+        .user-actions {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .upgrade-btn {
+            background-color: var(--primary-color);
+            color: var(--text-color);
+            border: none;
+            border-radius: 20px;
+            padding: 8px 20px;
+            font-size: 14px;
+            cursor: pointer;
+            transition: opacity 0.3s;
+        }
+
+        .upgrade-btn:hover {
+            opacity: 0.9;
+        }
+
+        .download-btn {
+            background-color: rgba(255, 255, 255, 0.1);
+            color: var(--text-color);
+            border: none;
+            border-radius: 20px;
+            padding: 8px 20px;
+            font-size: 14px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            transition: background-color 0.3s;
+        }
+
+        .download-btn:hover {
+            background-color: rgba(255, 255, 255, 0.2);
+        }
+        
+        .settings-btn {
+            background: none;
+            border: none;
+            color: var(--text-color);
+            font-size: 18px;
+            cursor: pointer;
+            width: 32px;
+            height: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+        }
+
+        .settings-btn:hover {
+            background-color: var(--hover-bg);
+        }
+
+        .user-avatar {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background-color: #e0e0e0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+        }
+
+        .section {
+            margin-bottom: 30px;
+        }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .section-title {
+            font-size: 20px;
+            font-weight: bold;
+        }
+
+        .section-more {
+            color: var(--text-color);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            font-size: 14px;
+        }
+
+        .section-more i {
+            margin-left: 5px;
+        }
+
+        .song-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 20px;
+        }
+
+        .song-card {
+            background-color: var(--card-bg);
+            border-radius: 4px;
+            overflow: hidden;
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+
+        .song-card:hover {
+            background-color: var(--hover-bg);
+        }
+
+        .song-thumbnail {
+            position: relative;
+            padding-top: 100%;
+            overflow: hidden;
+        }
+
+        .song-thumbnail img {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .song-details {
+            padding: 10px;
+        }
+
+        .song-title {
+            font-weight: bold;
+            margin-bottom: 5px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .song-artist {
+            font-size: 12px;
+            color: var(--secondary-text);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .premium-badge {
+            background-color: #f8c23a;
+            color: #000;
+            font-size: 10px;
+            padding: 2px 5px;
+            border-radius: 3px;
+            margin-left: 5px;
+            font-weight: bold;
+        }
+
+        .playlist-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 20px;
+        }
+
+        .playlist-card {
+            background-color: var(--card-bg);
+            border-radius: 4px;
+            overflow: hidden;
+            transition: all 0.3s;
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .playlist-card:hover {
+            background-color: var(--hover-bg);
+        }
+
+        .playlist-thumbnail {
+            position: relative;
+            padding-top: 100%;
+            overflow: hidden;
+        }
+
+        .playlist-thumbnail img {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+
+        .playlist-card:hover .playlist-thumbnail img {
+            transform: scale(1.05);
+        }
+
+        .playlist-title {
+            font-weight: bold;
+            margin: 10px;
+            font-size: 16px;
+        }
+
+        .playlist-description {
+            margin: 0 10px 10px;
+            font-size: 12px;
+            color: var(--secondary-text);
+            line-height: 1.4;
+        }
+
+        .refresh-btn {
+            background: none;
+            border: none;
+            color: var(--text-color);
+            font-size: 18px;
+            cursor: pointer;
+            width: 32px;
+            height: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+        }
+
+        .add-playlist-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            padding: 15px;
+            background: none;
+            border: none;
+            color: var(--text-color);
+            cursor: pointer;
+            font-size: 14px;
+            transition: background-color 0.3s;
+        }
+
+        .add-playlist-btn:hover {
+            background-color: var(--hover-bg);
+        }
+
+        .add-playlist-btn i {
+            margin-right: 10px;
+            font-size: 18px;
+        }
+
+        .play-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(0, 0, 0, 0.5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .song-thumbnail:hover .play-overlay,
+        .playlist-thumbnail:hover .play-overlay {
+            opacity: 1;
+        }
+
+        .play-btn {
+            color: white;
+            font-size: 40px;
+        }
+
+        .add-to-favorites {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            color: white;
+            background-color: rgba(0, 0, 0, 0.5);
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: opacity 0.3s;
+            cursor: pointer;
+        }
+
+        .song-thumbnail:hover .add-to-favorites,
+        .playlist-thumbnail:hover .add-to-favorites {
+            opacity: 1;
+        }
+
+        /* Responsive styles */
+        @media (max-width: 992px) {
+            .song-grid, .playlist-grid {
+                grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+            }
+        }
+
+        @media (max-width: 768px) {
+            .sidebar {
+                width: 60px;
+            }
+            
+            .sidebar .logo-text,
+            .sidebar .nav-text {
+                display: none;
+            }
+            
+            .main-content {
+                padding: 15px;
+            }
+            
+            .download-btn {
+                display: none;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .song-grid, .playlist-grid {
+                grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+                gap: 10px;
+            }
+            
+            .search-bar {
+                max-width: 200px;
+            }
+            
+            .upgrade-btn {
+                padding: 8px 10px;
+            }
+            
+            .section-title {
+                font-size: 18px;
+            }
+        }
+
+        /* Bottom player bar */
+        .player-bar {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 90px;
+            background-color: var(--sidebar-bg);
+            display: flex;
+            align-items: center;
+            padding: 0 20px;
+            z-index: 1000;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .now-playing {
+            display: flex;
+            align-items: center;
+            width: 30%;
+        }
+
+        .now-playing-img {
+            width: 60px;
+            height: 60px;
+            border-radius: 4px;
+            margin-right: 15px;
+            overflow: hidden;
+        }
+
+        .now-playing-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .now-playing-info {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .now-playing-title {
+            font-weight: bold;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            margin-bottom: 5px;
+        }
+
+        .now-playing-artist {
+            font-size: 12px;
+            color: var(--secondary-text);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .player-controls {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            flex: 1;
+        }
+
+        .control-buttons {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 10px;
+        }
+
+        .control-btn {
+            background: none;
+            border: none;
+            color: var(--text-color);
+            font-size: 16px;
+            margin: 0 10px;
+            cursor: pointer;
+            width: 32px;
+            height: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            transition: all 0.2s;
+        }
+
+        .control-btn:hover {
+            color: var(--primary-color);
+        }
+
+        .control-btn.play-pause {
+            font-size: 24px;
+            background-color: white;
+            color: black;
+            width: 40px;
+            height: 40px;
+        }
+
+        .control-btn.play-pause:hover {
+            transform: scale(1.1);
+        }
+
+        .progress-container {
+            display: flex;
+            align-items: center;
+            width: 100%;
+            gap: 10px;
+        }
+
+        .progress-time {
+            font-size: 12px;
+            color: var(--secondary-text);
+            width: 35px;
+            text-align: center;
+        }
+
+        .progress-bar {
+            flex: 1;
+            height: 4px;
+            background-color: rgba(255, 255, 255, 0.2);
+            border-radius: 2px;
+            position: relative;
+            cursor: pointer;
+        }
+
+        .progress-current {
+            height: 100%;
+            background-color: var(--primary-color);
+            border-radius: 2px;
+            width: 30%;
+        }
+
+        .volume-controls {
+            display: flex;
+            align-items: center;
+            width: 30%;
+            justify-content: flex-end;
+        }
+
+        .volume-btn {
+            background: none;
+            border: none;
+            color: var(--text-color);
+            font-size: 16px;
+            cursor: pointer;
+            width: 32px;
+            height: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 10px;
+        }
+
+        .volume-slider {
+            width: 100px;
+            height: 4px;
+            background-color: rgba(255, 255, 255, 0.2);
+            border-radius: 2px;
+            position: relative;
+            cursor: pointer;
+        }
+
+        .volume-current {
+            height: 100%;
+            background-color: var(--primary-color);
+            border-radius: 2px;
+            width: 70%;
+        }
+
+        /* For refresh button animation */
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .spinner {
+            animation: spin 1s linear infinite;
+        }
+
+        .refresh-button {
+            background-color: var(--primary-color);
+            color: #fff;
+            border: none;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            position: fixed;
+            bottom: 110px;
+            right: 20px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+            z-index: 100;
+            transition: transform 0.3s ease;
+        }
+
+        .refresh-button:hover {
+            transform: scale(1.1);
+        }
+    </style>
+</head>
+<body>
+    <!-- Sidebar -->
+    <div class="sidebar">
+        <div class="sidebar-header">
+            <a href="#" class="logo">
+                <span style="color: #40e0d0;">Zing</span>
+                <span>mp3</span>
+            </a>
+        </div>
+        
+        <a href="#" class="nav-item active">
+            <i class="fas fa-bookmark"></i>
+            <span class="nav-text">Thư Viện</span>
+        </a>
+        
+        <a href="#" class="nav-item">
+            <i class="fas fa-compass"></i>
+            <span class="nav-text">Khám Phá</span>
+        </a>
+        
+        <a href="#" class="nav-item">
+            <i class="fas fa-chart-line"></i>
+            <span class="nav-text">#zingchart</span>
+        </a>
+        
+        <a href="#" class="nav-item">
+            <i class="fas fa-broadcast-tower"></i>
+            <span class="nav-text">Radio</span>
+            <span class="live-badge">LIVE</span>
+        </a>
+        
+        <a href="#" class="nav-item">
+            <i class="fas fa-music"></i>
+            <span class="nav-text">BXH Nhạc Mới</span>
+        </a>
+        
+        <a href="#" class="nav-item">
+            <i class="fas fa-th-large"></i>
+            <span class="nav-text">Chủ Đề & Thể Loại</span>
+        </a>
+        
+        <a href="#" class="nav-item">
+            <i class="fas fa-star"></i>
+            <span class="nav-text">Top 100</span>
+        </a>
+        
+        <div class="signin-prompt">
+            <p>Đăng nhập để khám phá playlist dành riêng cho bạn</p>
+            <button class="signin-btn">ĐĂNG NHẬP</button>
+        </div>
+        
+        <button class="add-playlist-btn">
+            <i class="fas fa-plus"></i>
+            <span>Tạo playlist mới</span>
+        </button>
+    </div>
+    
+    <!-- Main Content -->
+    <div class="main-content">
+        <!-- Header -->
+        <div class="header">
+            <div class="nav-buttons">
+                <button class="nav-btn"><i class="fas fa-arrow-left"></i></button>
+                <button class="nav-btn"><i class="fas fa-arrow-right"></i></button>
+            </div>
+            
+            <div class="search-bar">
+                <i class="fas fa-search"></i>
+                <input type="text" class="search-input" placeholder="Tìm kiếm bài hát, nghệ sĩ, lời bài hát...">
+            </div>
+            
+            <div class="user-actions">
+                <button class="upgrade-btn">Nâng cấp tài khoản</button>
+                <button class="download-btn">
+                    <i class="fas fa-download"></i>
+                    Tải bản Windows
+                </button>
+                <button class="settings-btn"><i class="fas fa-cog"></i></button>
+                <div class="user-avatar">
+                    <i class="fas fa-user"></i>
+                </div>
+            </div>
+        </div>
+        
+        <!-- For You Section -->
+        <div class="section">
+            <div class="section-header">
+                <h2 class="section-title">Gợi Ý Cho Ban</h2>
+                <button class="refresh-button">
+                    <i class="fas fa-sync-alt"></i>
+                </button>
+                <a href="#" class="refresh-btn">
+                    <i class="fas fa-redo"></i>
+                </a>
+            </div>
+            
+            <div class="song-grid">
+                <!-- Song 1 -->
+                <div class="song-card">
+                    <div class="song-thumbnail">
+                        <img src="/api/placeholder/200/200" alt="Kiếp Sau Vẫn Muốn Làm Gia Tộc">
+                        <div class="play-overlay">
+                            <i class="fas fa-play play-btn"></i>
+                        </div>
+                        <div class="add-to-favorites">
+                            <i class="far fa-heart"></i>
+                        </div>
+                    </div>
+                    <div class="song-details">
+                        <div class="song-title">Kiếp Sau Vẫn Muốn Làm Gia Tộc</div>
+                        <div class="song-artist">Đông Đài Vương / 彤大王</div>
+                    </div>
+                </div>
+                
+                <!-- Song 2 -->
+                <div class="song-card">
+                    <div class="song-thumbnail">
+                        <img src="/api/placeholder/200/200" alt="Cắt Đôi Nỗi Sầu">
+                        <div class="play-overlay">
+                            <i class="fas fa-play play-btn"></i>
+                        </div>
+                        <div class="add-to-favorites">
+                            <i class="far fa-heart"></i>
+                        </div>
+                    </div>
+                    <div class="song-details">
+                        <div class="song-title">Cắt Đôi Nỗi Sầu</div>
+                        <div class="song-artist">Tăng Duy Tân, Drum7</div>
+                    </div>
+                </div>
+                
+                <!-- Song 3 -->
+                <div class="song-card">
+                    <div class="song-thumbnail">
+                        <img src="/api/placeholder/200/200" alt="ATTITUDE">
+                        <div class="play-overlay">
+                            <i class="fas fa-play play-btn"></i>
+                        </div>
+                        <div class="add-to-favorites">
+                            <i class="far fa-heart"></i>
+                        </div>
+                    </div>
+                    <div class="song-details">
+                        <div class="song-title">ATTITUDE <span class="premium-badge">PREMIUM</span></div>
+                        <div class="song-artist">IVE</div>
+                    </div>
+                </div>
+                
+                <!-- Song 4 -->
+                <div class="song-card">
+                    <div class="song-thumbnail">
+                        <img src="/api/placeholder/200/200" alt="Nơi Này Có Anh">
+                        <div class="play-overlay">
+                            <i class="fas fa-play play-btn"></i>
+                        </div>
+                        <div class="add-to-favorites">
+                            <i class="far fa-heart"></i>
+                        </div>
+                    </div>
+                    <div class="song-details">
+                        <div class="song-title">Nơi Này Có Anh</div>
+                        <div class="song-artist">Sơn Tùng M-TP</div>
+                    </div>
+                </div>
+                
+                <!-- Song 5 -->
+                <div class="song-card">
+                    <div class="song-thumbnail">
+                        <img src="/api/placeholder/200/200" alt="Chờ Cậu Trả Lời Của Ban">
+                        <div class="play-overlay">
+                            <i class="fas fa-play play-btn"></i>
+                        </div>
+                        <div class="add-to-favorites">
+                            <i class="far fa-heart"></i>
+                        </div>
+                    </div>
+                    <div class="song-details">
+                        <div class="song-title">Chờ Cậu Trả Lời Của Ban</div>
+                        <div class="song-artist">朱志龙, 张泽禹, 张玖, 左凡, 苏新婷</div>
+                    </div>
+                </div>
+                
+                <!-- Song 6 -->
+                <div class="song-card">
+                    <div class="song-thumbnail">
+                        <img src="/api/placeholder/200/200" alt="Ngày Này, Người Con Gái Này">
+                        <div class="play-overlay">
+                            <i class="fas fa-play play-btn"></i>
+                        </div>
+                        <div class="add-to-favorites">
+                            <i class="far fa-heart"></i>
+                        </div>
+                    </div>
+                    <div class="song-details">
+                        <div class="song-title">Ngày Này, Người Con Gái Này</div>
+                        <div class="song-artist">Vũ Cát Tường</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Chill Section -->
+        <div class="section">
+            <div class="section-header">
+                <h2 class="section-title">Chill</h2>
+                <a href="#" class="section-more">
+                    TẤT CẢ <i class="fas fa-chevron-right"></i>
+                </a>
+            </div>
+            
+            <div class="playlist-grid">
+                <!-- Playlist 1 -->
+                <div class="playlist-card">
+                    <div class="playlist-thumbnail">
+                        <img src="/api/placeholder/200/200" alt="Playlist Này Chill Phết">
+                        <div class="play-overlay">
+                            <i class="fas fa-play play-btn"></i>
+                        </div>
+                        <div class="add-to-favorites">
+                            <i class="far fa-heart"></i>
+                        </div>
+                    </div>
+                    <h3 class="playlist-title">Playlist Này Chill Phết</h3>
+                    <p class="playlist-description">Và vào những giai điệu cực chill của V-Pop</p>
+                </div>
+                
+                <!-- Playlist 2 -->
+                <div class="playlist-card">
+                    <div class="playlist-thumbnail">
+                        <img src="/api/placeholder/200/200" alt="Nhạc Lofi Chill Gây Nghiện">
+                        <div class="play-overlay">
+                            <i class="fas fa-play play-btn"></i>
+                        </div>
+                        <div class="add-to-favorites">
+                            <i class="far fa-heart"></i>
+                        </div>
+                    </div>
+                    <h3 class="playlist-title">Nhạc Lofi Chill Gây Nghiện</h3>
+                    <p class="playlist-description">Thả mình vào những giai điệu Lofi Chill nghe là nghiện</p>
