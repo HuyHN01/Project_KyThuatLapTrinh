@@ -735,3 +735,79 @@ body {
 .refresh-button:hover {
     transform: scale(1.1);
 }
+
+/* CSS cho Pagination (Nên đưa vào file style.css chính của bạn) */
+
+/* 1. Thiết lập cho container ul.pagination */
+.pagination {
+    display: flex; /* Rất quan trọng: Biến ul thành flex container để các li có thể xếp ngang */
+    justify-content: center; /* Căn giữa cụm pagination (bạn đã có class này trong HTML) */
+    align-items: center; /* Căn các item theo chiều dọc, hữu ích nếu chiều cao nút khác nhau */
+    padding-left: 0; /* Loại bỏ padding mặc định của ul */
+    list-style: none; /* Loại bỏ dấu chấm đầu dòng mặc định của ul */
+    margin-top: 1.5rem;
+    margin-bottom: 1.5rem;
+}
+
+/* 2. Thiết lập cho từng page-item (li) */
+.pagination .page-item {
+    /* Không cần display: inline-block hoặc flex ở đây vì ul đã là flex container */
+    margin: 0 4px; /* TẠO KHOẢNG CÁCH ĐỀU NHAU giữa các nút. Điều chỉnh số px nếu cần */
+}
+
+/* 3. Style cho page-link (a hoặc span bên trong li) - Giữ lại và tinh chỉnh */
+.pagination .page-link {
+    color: var(--secondary-text, #9b9b9b);
+    background-color: transparent;
+    border: 1px solid var(--hover-bg, #3a3a3a);
+    /* margin: 0 3px; Xóa margin ở đây, đã chuyển lên .page-item để kiểm soát tốt hơn */
+    border-radius: 0.3rem;
+    padding: 0.5rem 0.85rem; /* Giữ nguyên padding cho kích thước nút */
+    transition: all 0.2s ease-in-out;
+    display: block; /* Đảm bảo link chiếm toàn bộ page-item để padding có tác dụng */
+    position: relative; /* Cần cho z-index của active và hover */
+    text-decoration: none; /* Đảm bảo không có gạch chân không mong muốn */
+}
+
+/* 4. Style cho page-item active */
+.pagination .page-item.active .page-link {
+    z-index: 3;
+    color: var(--text-color, #fff);
+    background-color: var(--primary-color, #7200da);
+    border-color: var(--primary-color, #7200da);
+    font-weight: 600;
+}
+
+/* 5. Style cho page-item disabled */
+.pagination .page-item.disabled .page-link {
+    color: #6c757d;
+    pointer-events: none;
+    background-color: transparent; /* Giữ nền trong suốt */
+    border-color: var(--hover-bg, #2a213a); /* Viền mờ hơn chút */
+}
+
+/* 6. CSS cho dấu ... khi bị disabled (nếu bạn có dấu ...) */
+.pagination .page-item.disabled .page-link.mx-1 { /* .mx-1 là class Bootstrap cho margin ngang */
+    border: none; /* Bỏ viền cho dấu ... */
+    background-color: transparent !important; /* Đảm bảo nền trong suốt */
+}
+
+/* 7. Style cho page-link khi hover */
+.pagination .page-link:hover {
+    z-index: 2;
+    color: var(--text-color, #fff);
+    background-color: var(--hover-bg, #2a213a);
+    border-color: var(--hover-bg, #3a3a3a);
+}
+
+/* 8. Style cho icon bên trong page-link (nếu có) */
+.page-link .fas {
+    font-size: 0.9em;
+    vertical-align: middle; /* Căn icon tốt hơn nếu có text đi kèm */
+    line-height: 1; /* Đảm bảo icon không làm thay đổi chiều cao dòng quá nhiều */
+}
+
+/* 9. Style cho text-muted (nếu bạn dùng ở đâu đó gần pagination) */
+.text-muted {
+    color: var(--secondary-text, #9b9b9b) !important;
+}
