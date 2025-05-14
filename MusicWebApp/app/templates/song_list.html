@@ -1,1 +1,86 @@
- 
+ {% extends "base_layout.html" %}
+
+{% block title %}{{ title if title else "Danh Sách Bài Hát" }}{% endblock %}
+
+{% block content %}
+<div class="content-inner"> <div class="section">
+        <div class="section-header">
+            <h2 class="section-title">{{ title if title else "Tất Cả Bài Hát" }}</h2>
+            </div>
+
+        {% if songs %}
+            <div class="song-grid">
+                {% for song_item in songs %}
+                <div class="song-card">
+                    <a href="{{ url_for('main_routes.play_song', song_id=song_item.id) }}" class="song-card-link">
+                        <div class="song-thumbnail">
+                            {% if song_item.image_url %}
+                                <img src="{{ song_item.image_url }}" alt="{{ song_item.title }}">
+                            {% else %}
+                                <img src="{{ url_for('static', filename='images/placeholder_cover_default.png') }}" alt="No image available">
+                            {% endif %}
+                            <div class="play-overlay">
+                                <i class="fas fa-play play-btn"></i>
+                            </div>
+                            </div>
+                        <div class="song-details">
+                            <div class="song-title" title="{{ song_item.title }}">{{ song_item.title if song_item.title else "Không có tiêu đề" }}</div>
+                            <div class="song-artist" title="{{ song_item.artist }}">{{ song_item.artist if song_item.artist else "Nghệ sĩ không xác định" }}</div>
+                            </div>
+                    </a>
+                </div>
+                {% endfor %}
+            </div>
+        {% else %}
+            <div class="alert alert-info mt-4" role="alert">
+                {% if search_query %}
+                    Không tìm thấy bài hát nào phù hợp với từ khóa tìm kiếm: "<strong>{{ search_query }}</strong>".
+                {% else %}
+                    Hiện tại chưa có bài hát nào trong danh sách. Hãy thử populate dữ liệu.
+                {% endif %}
+            </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_css %}
+{{ super() }} <style>
+    /* CSS này có thể đã có trong style.css của bạn, nếu vậy thì không cần lặp lại ở đây */
+    /* Chỉ thêm những style CỤ THỂ cho song_list.html nếu cần thiết */
+    .content-inner .section-title {
+        margin-bottom: 20px; /* Khoảng cách cho tiêu đề section */
+    }
+    .song-grid {
+        /* CSS cho song-grid đã có trong style.css bạn cung cấp */
+    }
+    .song-card {
+        /* CSS cho song-card đã có trong style.css bạn cung cấp */
+    }
+    .song-card-link { /* Thêm để toàn bộ card là link */
+        text-decoration: none;
+        color: inherit; /* Kế thừa màu chữ */
+        display: block; /* Để link chiếm toàn bộ card */
+    }
+    .song-thumbnail {
+        /* CSS đã có */
+    }
+    .song-details {
+        /* CSS đã có */
+    }
+    .song-title {
+        /* CSS đã có, đảm bảo nó không bị gạch chân bởi link <a> */
+    }
+    .song-artist {
+        /* CSS đã có */
+    }
+    .play-overlay {
+        /* CSS đã có */
+    }
+    .alert-info { /* Style cho thông báo nếu dùng Bootstrap */
+        background-color: var(--card-bg);
+        border-color: var(--hover-bg);
+        color: var(--text-color);
+    }
+</style>
+{% endblock %}
