@@ -28,9 +28,12 @@ def create_app(config_class=Config):
     migrate.init_app(app, db) # Flask-Migrate cần cả app và db
 
     # Đăng ký Blueprints (nếu có) sẽ được thực hiện ở đây
-    # Ví dụ:
-    # from .routes import main_bp # Giả sử bạn tạo một blueprint tên là main_bp trong app/routes.py
-    # app.register_blueprint(main_bp)
+    from .routes import main_bp # Hoặc from .main_routes import main_bp nếu bạn tạo file riêng
+    app.register_blueprint(main_bp)
+
+    # (Tùy chọn) Thêm 'now' vào biến toàn cục của Jinja
+    from datetime import datetime
+    app.jinja_env.globals.update(now=datetime.utcnow)
 
     # Import các model ở đây để đảm bảo chúng được đăng ký với SQLAlchemy
     # trước khi các lệnh db (như migrate) được chạy từ bên ngoài.
