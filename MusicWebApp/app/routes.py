@@ -60,7 +60,8 @@ def search():
             base_query = Song.query.filter(
                 (Song.title.ilike(search_term)) |
                 (Song.artist.ilike(search_term)) |
-                (Song.album.ilike(search_term))
+                (Song.album.ilike(search_term)) |
+                (Song.genre.ilike(search_term))
             ).order_by(Song.title)
 
             # Thực hiện phân trang trên query đó
