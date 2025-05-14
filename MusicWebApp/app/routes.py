@@ -1,68 +1,93 @@
-# MusicWebApp/app/routes.py (hoặc app/main_routes.py)
-from flask import Blueprint, render_template, request
-from .models import Song # Import model Song
-# Nếu db được khởi tạo trong __init__.py và bạn cần dùng session trực tiếp (ít khi cần cho query)
-# from . import db
+# MusicWebApp/app/routes.py (Hoặc app/main_routes.py)
+from flask import Blueprint, render_template, request, current_app # Thêm current_app
+from .models import Song
 
-# Giữ nguyên tên blueprint là 'main_routes' để url_for trong base_layout.html hoạt động
-main_bp = Blueprint('main_routes', __name__,
-                    template_folder='../templates') # Đảm bảo trỏ đúng đến thư mục templates của app
-                                                    # Nếu routes.py và templates/ cùng trong app/, thì có thể là 'templates'
-                                                    # Hoặc không cần nếu Flask tự tìm thấy (thường là vậy)
+main_bp = Blueprint('main_routes', __name__, template_folder='templates')
 
 @main_bp.route('/')
 @main_bp.route('/index')
-@main_bp.route('/songs') # Thêm route /songs cho rõ ràng
+@main_bp.route('/songs')
 def index():
-    # Lấy tất cả các bài hát từ CSDL
-    # Sắp xếp theo thời gian được crawl gần nhất (crawled_at giảm dần)
-    # Hoặc bạn có thể sắp xếp theo tiêu chí khác, ví dụ: Song.title
+    """
+    Hiển thị trang chủ với danh sách tất cả các bài hát, có phân trang.
+    """
+    # Lấy số trang từ query parameter 'page', mặc định là trang 1, kiểu integer
+    page = request.args.get('page', 1, type=int)
+
+    # Lấy số lượng item trên mỗi trang từ cấu hình (hoặc đặt giá trị cố định)
+    # Bạn có thể thêm PER_PAGE = 10 vào file config.py
+    # Hoặc đặt trực tiếp ở đây:
+    per_page = current_app.config.get('SONGS_PER_PAGE', 10) # Lấy từ config hoặc mặc định 10
+
     try:
-        songs_from_db = Song.query.order_by(Song.crawled_at.desc()).all()
-        # Dòng debug để kiểm tra xem có lấy được bài hát không
-        print(f"Tìm thấy {len(songs_from_db)} bài hát trong CSDL.")
-        # if songs_from_db:
-        #     print(f"Bài hát đầu tiên: {songs_from_db[0].title}")
+        # Sử dụng .paginate() thay vì .all()
+        pagination = Song.query.order_by(Song.crawled_at.desc()).paginate(
+            page=page, per_page=per_page, error_out=False
+        )
+        # pagination.items chứa danh sách các bài hát cho trang hiện tại
+        songs_on_page = pagination.items
+
+        print(f"Trang {page}: Đã lấy {len(songs_on_page)} bài hát từ CSDL (trên tổng số {pagination.total} bài).")
     except Exception as e:
-        print(f"Lỗi khi truy vấn CSDL: {e}")
-        songs_from_db = [] # Trả về danh sách rỗng nếu có lỗi
+        print(f"Lỗi khi truy vấn CSDL cho trang chủ (phân trang): {e}")
+        songs_on_page = []
+        pagination = None # Không có đối tượng pagination nếu lỗi
 
-    # Truyền danh sách bài hát vào template 'song_list.html'
-    # Template này sẽ nằm trong MusicWebApp/app/templates/song_list.html
     return render_template('song_list.html',
-                           title="Trang Chủ - Tất Cả Bài Hát",
-                           songs=songs_from_db)
+                           title="Tất Cả Bài Hát",
+                           songs=songs_on_page, # Chỉ truyền các bài hát của trang hiện tại
+                           section_title="Tất Cả Bài Hát",
+                           pagination=pagination) # Truyền đối tượng pagination vào template
 
-# Route cho tìm kiếm (sẽ làm chi tiết hơn ở Công việc 3.3)
 @main_bp.route('/search')
 def search():
-    query_param = request.args.get('query', '')
+    """
+    Xử lý tìm kiếm bài hát và hiển thị kết quả, có phân trang.
+    """
+    query_param = request.args.get('query', '').strip()
+    page = request.args.get('page', 1, type=int)
+    per_page = current_app.config.get('SONGS_PER_PAGE', 10)
+
+    songs_on_page = []
+    pagination = None
+    page_title = "Tìm Kiếm Bài Hát"
+    section_title_text = "Kết quả tìm kiếm"
 
     if query_param:
-        search_term = f'%{query_param}%' # Thêm ký tự đại diện cho ilike
-        search_results = Song.query.filter(
-            (Song.title.ilike(search_term)) |
-            (Song.artist.ilike(search_term))
-        ).order_by(Song.title).all()
-        print(f"Tìm kiếm cho '{query_param}', tìm thấy {len(search_results)} kết quả.")
+        search_term = f'%{query_param}%'
+        try:
+            # Xây dựng query cơ sở
+            base_query = Song.query.filter(
+                (Song.title.ilike(search_term)) |
+                (Song.artist.ilike(search_term)) |
+                (Song.album.ilike(search_term))
+            ).order_by(Song.title)
+
+            # Thực hiện phân trang trên query đó
+            pagination = base_query.paginate(
+                page=page, per_page=per_page, error_out=False
+            )
+            songs_on_page = pagination.items
+
+            print(f"Tìm kiếm cho '{query_param}', trang {page}: tìm thấy {len(songs_on_page)}/{pagination.total} kết quả.")
+            page_title = f"Kết quả cho: '{query_param}'"
+            section_title_text = f"Kết quả cho: \"{query_param}\" (Trang {page})"
+        except Exception as e:
+            print(f"Lỗi khi truy vấn CSDL cho tìm kiếm '{query_param}' (phân trang): {e}")
+            songs_on_page = []
+            pagination = None
     else:
-        search_results = []
-        print("Không có từ khóa tìm kiếm, trả về danh sách rỗng.")
+        section_title_text = "Vui lòng nhập từ khóa để tìm kiếm"
 
-    # Sử dụng cùng template song_list.html để hiển thị kết quả tìm kiếm
     return render_template('song_list.html',
-                           title=f"Kết quả tìm kiếm cho: '{query_param}'" if query_param else "Tìm Kiếm",
-                           songs=search_results,
-                           search_query=query_param)
+                           title=page_title,
+                           songs=songs_on_page, # Chỉ truyền các bài hát của trang hiện tại
+                           search_query_display=query_param,
+                           section_title=section_title_text,
+                           pagination=pagination) # Truyền đối tượng pagination
 
-# >>> THÊM ROUTE NÀY <<<
+# Route play_song giữ nguyên như trước (placeholder)
 @main_bp.route('/play/<int:song_id>')
 def play_song(song_id):
-    # Tạm thời, route này chỉ lấy thông tin bài hát và có thể render một template đơn giản
-    # Hoặc chỉ trả về một thông báo. Mục đích chính là để url_for không bị lỗi.
-    song = Song.query.get_or_404(song_id) # Lấy bài hát hoặc trả về lỗi 404 nếu không tìm thấy
-
-    # Bạn sẽ tạo template music_player_page.html ở Công việc 3.4
-    # Tạm thời, có thể render một placeholder hoặc chỉ trả về tên bài hát
-    # return f"Sẽ phát bài hát: {song.title} - {song.artist}"
+    song = Song.query.get_or_404(song_id)
     return render_template('music_player_placeholder.html', song=song, title=f"Đang phát: {song.title}")

@@ -53,5 +53,4 @@ class Config:
     SQLALCHEMY_TRACK_MODIFICATIONS = False
 
     # (Tùy chọn) Các cấu hình khác cho ứng dụng của bạn có thể được thêm ở đây
-    # ví dụ:
-    # ITEMS_PER_PAGE = 10
+    SONGS_PER_PAGE = 10 # Số bài hát hiển thị trên mỗi trang
