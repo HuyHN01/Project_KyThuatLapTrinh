@@ -1,1 +1,1109 @@
-.
+:root {
+    --primary-color: #8c14fc;
+    --text-color: #fff;
+    --sidebar-bg: #121212;
+    --main-bg: #170f23;
+    --card-bg: #231b2e;
+    --secondary-text: #9b9b9b;
+    --hover-bg: #2a213a;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Arial', sans-serif;
+}
+
+body {
+    background-color: var(--main-bg);
+    color: var(--text-color);
+    display: flex;
+    height: 100vh;
+    overflow: hidden;
+}
+
+.sidebar {
+    width: 240px;
+    background-color: var(--sidebar-bg);
+    height: 100%;
+    overflow-y: auto;
+    flex-shrink: 0;
+    transition: all 0.3s ease;
+}
+
+.sidebar-header {
+    padding: 20px 25px;
+    display: flex;
+    align-items: center;
+}
+
+.logo {
+    color: #40e0d0;
+    font-size: 24px;
+    font-weight: bold;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+}
+
+.logo span {
+    color: var(--text-color);
+}
+
+.nav-item {
+    display: flex;
+    align-items: center;
+    padding: 12px 25px;
+    color: var(--text-color);
+    text-decoration: none;
+    transition: all 0.3s;
+    cursor: pointer;
+}
+
+.nav-item:hover {
+    background-color: var(--hover-bg);
+}
+
+.nav-item.active {
+    background-color: var(--hover-bg);
+    border-left: 3px solid var(--primary-color);
+}
+
+.nav-item i {
+    margin-right: 15px;
+    font-size: 18px;
+    width: 24px;
+    text-align: center;
+}
+
+.live-badge {
+    font-size: 10px;
+    background-color: #f00;
+    color: white;
+    padding: 2px 5px;
+    border-radius: 3px;
+    margin-left: 10px;
+}
+
+.signin-prompt {
+    margin: 20px;
+    padding: 20px;
+    background-color: var(--card-bg);
+    border-radius: 8px;
+    text-align: center;
+}
+
+.signin-prompt p {
+    color: var(--text-color);
+    margin-bottom: 15px;
+    font-size: 14px;
+}
+
+.signin-btn {
+    background-color: transparent;
+    border: 1px solid var(--text-color);
+    color: var(--text-color);
+    padding: 8px 30px;
+    border-radius: 20px;
+    cursor: pointer;
+    font-size: 14px;
+    width: 100%;
+    transition: all 0.3s;
+}
+
+.signin-btn:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+.main-content {
+    flex: 1;
+    overflow-y: auto;
+    padding: 20px;
+    padding-top: 0;
+}
+
+.header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 15px 0;
+    position: sticky;
+    top: 0;
+    background-color: var(--main-bg);
+    z-index: 100;
+}
+
+.search-bar {
+    display: flex;
+    align-items: center;
+    background-color: rgba(255, 255, 255, 0.1);
+    border-radius: 20px;
+    padding: 8px 15px;
+    flex: 1;
+    max-width: 440px;
+}
+
+.search-bar i {
+    color: var(--text-color);
+    margin-right: 10px;
+}
+
+.search-input {
+    background: transparent;
+    border: none;
+    color: var(--text-color);
+    font-size: 14px;
+    width: 100%;
+    outline: none;
+}
+
+.search-input::placeholder {
+    color: var(--secondary-text);
+}
+
+.nav-buttons {
+    display: flex;
+    gap: 10px;
+}
+
+.nav-btn {
+    background: none;
+    border: none;
+    color: var(--text-color);
+    font-size: 18px;
+    cursor: pointer;
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+}
+
+.nav-btn:hover {
+    background-color: var(--hover-bg);
+}
+
+.user-actions {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.upgrade-btn {
+    background-color: var(--primary-color);
+    color: var(--text-color);
+    border: none;
+    border-radius: 20px;
+    padding: 8px 20px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: opacity 0.3s;
+}
+
+.upgrade-btn:hover {
+    opacity: 0.9;
+}
+
+.download-btn {
+    background-color: rgba(255, 255, 255, 0.1);
+    color: var(--text-color);
+    border: none;
+    border-radius: 20px;
+    padding: 8px 20px;
+    font-size: 14px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    transition: background-color 0.3s;
+}
+
+.download-btn:hover {
+    background-color: rgba(255, 255, 255, 0.2);
+}
+
+.settings-btn {
+    background: none;
+    border: none;
+    color: var(--text-color);
+    font-size: 18px;
+    cursor: pointer;
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+}
+
+.settings-btn:hover {
+    background-color: var(--hover-bg);
+}
+
+.user-avatar {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background-color: #e0e0e0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+
+.section {
+    margin-bottom: 30px;
+}
+
+.section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.section-title {
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.section-more {
+    color: var(--text-color);
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    font-size: 14px;
+}
+
+.section-more i {
+    margin-left: 5px;
+}
+
+.song-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 20px;
+}
+
+.song-card {
+    background-color: var(--card-bg);
+    border-radius: 4px;
+    overflow: hidden;
+    transition: all 0.3s;
+    cursor: pointer;
+}
+
+.song-card:hover {
+    background-color: var(--hover-bg);
+}
+
+.song-thumbnail {
+    position: relative;
+    padding-top: 100%;
+    overflow: hidden;
+}
+
+.song-thumbnail img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.song-details {
+    padding: 10px;
+}
+
+.song-title {
+    font-weight: bold;
+    margin-bottom: 5px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.song-artist {
+    font-size: 12px;
+    color: var(--secondary-text);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.premium-badge {
+    background-color: #f8c23a;
+    color: #000;
+    font-size: 10px;
+    padding: 2px 5px;
+    border-radius: 3px;
+    margin-left: 5px;
+    font-weight: bold;
+}
+
+.playlist-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 20px;
+}
+
+.playlist-card {
+    background-color: var(--card-bg);
+    border-radius: 4px;
+    overflow: hidden;
+    transition: all 0.3s;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+}
+
+.playlist-card:hover {
+    background-color: var(--hover-bg);
+}
+
+.playlist-thumbnail {
+    position: relative;
+    padding-top: 100%;
+    overflow: hidden;
+}
+
+.playlist-thumbnail img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+}
+
+.playlist-card:hover .playlist-thumbnail img {
+    transform: scale(1.05);
+}
+
+.playlist-title {
+    font-weight: bold;
+    margin: 10px;
+    font-size: 16px;
+}
+
+.playlist-description {
+    margin: 0 10px 10px;
+    font-size: 12px;
+    color: var(--secondary-text);
+    line-height: 1.4;
+}
+
+.refresh-btn {
+    background: none;
+    border: none;
+    color: var(--text-color);
+    font-size: 18px;
+    cursor: pointer;
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+}
+
+.add-playlist-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    padding: 15px;
+    background: none;
+    border: none;
+    color: var(--text-color);
+    cursor: pointer;
+    font-size: 14px;
+    transition: background-color 0.3s;
+}
+
+.add-playlist-btn:hover {
+    background-color: var(--hover-bg);
+}
+
+.add-playlist-btn i {
+    margin-right: 10px;
+    font-size: 18px;
+}
+
+.play-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+
+.song-thumbnail:hover .play-overlay,
+.playlist-thumbnail:hover .play-overlay {
+    opacity: 1;
+}
+
+.play-btn {
+    color: white;
+    font-size: 40px;
+}
+
+.add-to-favorites {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    color: white;
+    background-color: rgba(0, 0, 0, 0.5);
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: opacity 0.3s;
+    cursor: pointer;
+}
+
+.song-thumbnail:hover .add-to-favorites,
+.playlist-thumbnail:hover .add-to-favorites {
+    opacity: 1;
+}
+
+/* Responsive styles */
+@media (max-width: 992px) {
+
+    .song-grid,
+    .playlist-grid {
+        grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+    }
+}
+
+@media (max-width: 768px) {
+    .sidebar {
+        width: 60px;
+    }
+
+    .sidebar .logo-text,
+    .sidebar .nav-text {
+        display: none;
+    }
+
+    .main-content {
+        padding: 15px;
+    }
+
+    .download-btn {
+        display: none;
+    }
+}
+
+@media (max-width: 576px) {
+
+    .song-grid,
+    .playlist-grid {
+        grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+        gap: 10px;
+    }
+
+    .search-bar {
+        max-width: 200px;
+    }
+
+    .upgrade-btn {
+        padding: 8px 10px;
+    }
+
+    .section-title {
+        font-size: 18px;
+    }
+}
+
+/* Bottom player bar */
+.player-bar {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 90px;
+    background-color: var(--sidebar-bg);
+    display: flex;
+    align-items: center;
+    padding: 0 20px;
+    z-index: 1000;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.now-playing {
+    display: flex;
+    align-items: center;
+    width: 30%;
+}
+
+.now-playing-img {
+    width: 60px;
+    height: 60px;
+    border-radius: 4px;
+    margin-right: 15px;
+    overflow: hidden;
+}
+
+.now-playing-img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.now-playing-info {
+    flex: 1;
+    min-width: 0;
+}
+
+.now-playing-title {
+    font-weight: bold;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    margin-bottom: 5px;
+}
+
+.now-playing-artist {
+    font-size: 12px;
+    color: var(--secondary-text);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.player-controls {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex: 1;
+}
+
+.control-buttons {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 10px;
+}
+
+.control-btn {
+    background: none;
+    border: none;
+    color: var(--text-color);
+    font-size: 16px;
+    margin: 0 10px;
+    cursor: pointer;
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    transition: all 0.2s;
+}
+
+.control-btn:hover {
+    color: var(--primary-color);
+}
+
+.control-btn.play-pause {
+    font-size: 24px;
+    background-color: white;
+    color: black;
+    width: 40px;
+    height: 40px;
+}
+
+.control-btn.play-pause:hover {
+    transform: scale(1.1);
+}
+
+.progress-container {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    gap: 10px;
+}
+
+.progress-time {
+    font-size: 12px;
+    color: var(--secondary-text);
+    width: 35px;
+    text-align: center;
+}
+
+.progress-bar {
+    flex: 1;
+    height: 4px;
+    background-color: rgba(255, 255, 255, 0.2);
+    border-radius: 2px;
+    position: relative;
+    cursor: pointer;
+}
+
+.progress-current {
+    height: 100%;
+    background-color: var(--primary-color);
+    border-radius: 2px;
+    width: 30%;
+}
+
+.volume-controls {
+    display: flex;
+    align-items: center;
+    width: 30%;
+    justify-content: flex-end;
+}
+
+.volume-btn {
+    background: none;
+    border: none;
+    color: var(--text-color);
+    font-size: 16px;
+    cursor: pointer;
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 10px;
+}
+
+.volume-slider {
+    width: 100px;
+    height: 4px;
+    background-color: rgba(255, 255, 255, 0.2);
+    border-radius: 2px;
+    position: relative;
+    cursor: pointer;
+}
+
+.volume-current {
+    height: 100%;
+    background-color: var(--primary-color);
+    border-radius: 2px;
+    width: 70%;
+}
+
+/* For refresh button animation */
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+.spinner {
+    animation: spin 1s linear infinite;
+}
+
+.refresh-button {
+    background-color: var(--primary-color);
+    color: #fff;
+    border: none;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    position: fixed;
+    bottom: 110px;
+    right: 20px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    z-index: 100;
+    transition: transform 0.3s ease;
+}
+
+.refresh-button:hover {
+    transform: scale(1.1);
+}
+
+/* MusicWebApp/app/static/css/style.css */
+
+/* ... (CSS hiện tại của bạn cho body, sidebar, main-content, header, player-bar nói chung) ... */
+
+/* CSS cho Player Bar - Phần Controls và Progress Bar */
+.player-bar {
+    /* ... (các style hiện tại của bạn cho player-bar: position, bottom, left, right, height, background-color, display: flex, align-items, padding, z-index, border-top) ... */
+    /* Đảm bảo display: flex và align-items: center cho player-bar nói chung */
+}
+
+.now-playing {
+    /* ... (style cho now-playing) ... */
+    width: 30%; /* Hoặc một giá trị phù hợp */
+    min-width: 180px; /* Tránh bị co quá nhỏ */
+}
+
+.player-controls {
+    display: flex;
+    flex-direction: column; /* Sắp xếp control-buttons và progress-container theo chiều dọc */
+    align-items: center;    /* Căn giữa theo chiều ngang */
+    justify-content: center;/* Căn giữa theo chiều dọc */
+    flex-grow: 1;           /* Cho phép chiếm không gian còn lại ở giữa */
+    margin: 0 15px;         /* Khoảng cách với now-playing và volume-controls */
+}
+
+.control-buttons {
+    display: flex;
+    align-items: center;
+    margin-bottom: 8px; /* Khoảng cách giữa các nút và thanh tiến trình */
+}
+
+.control-buttons .control-btn {
+    /* ... (style cho các nút control của bạn) ... */
+    background: none;
+    border: none;
+    color: var(--text-color, #fff);
+    font-size: 16px; /* Kích thước icon cho prev/next */
+    margin: 0 10px;
+    cursor: pointer;
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    transition: all 0.2s;
+}
+.control-buttons .control-btn.play-pause {
+    font-size: 20px; /* Kích thước lớn hơn cho nút play/pause */
+    /* Tùy chọn: Thêm style riêng cho nút play/pause nếu muốn nó nổi bật hơn */
+    /* background-color: rgba(255, 255, 255, 0.1); */
+}
+.control-buttons .control-btn:hover {
+    /* background-color: var(--hover-bg, #282828); */
+    color: var(--primary-color, #8c14fc);
+}
+
+
+/* ĐỊNH DẠNG CHO PROGRESS CONTAINER VÀ CÁC THÀNH PHẦN BÊN TRONG */
+.progress-container {
+    display: flex;         /* Sắp xếp các item (currentTime, progressBar, totalTime) trên một hàng */
+    align-items: center;   /* Căn giữa các item theo chiều dọc */
+    width: 100%;           /* Chiếm toàn bộ chiều rộng của .player-controls */
+    max-width: 450px;      /* Giới hạn chiều rộng tối đa của thanh tiến trình */
+    gap: 10px;             /* Khoảng cách giữa các item */
+}
+
+.progress-time {
+    font-size: 12px;
+    color: var(--secondary-text, #b3b3b3);
+    min-width: 35px; /* Đảm bảo đủ chỗ cho định dạng mm:ss */
+    text-align: center;
+    user-select: none; /* Tránh việc người dùng vô tình chọn text thời gian */
+}
+
+input[type="range"].progress-bar-slider {
+    flex-grow: 1; /* Cho phép thanh trượt chiếm không gian còn lại */
+    -webkit-appearance: none; /* Bỏ style mặc định của trình duyệt */
+    appearance: none;
+    width: 100%;
+    height: 5px; /* Chiều cao của rãnh trượt */
+    background: rgba(255, 255, 255, 0.2); /* Màu nền của rãnh trượt */
+    border-radius: 5px;
+    outline: none; /* Bỏ viền khi focus */
+    cursor: pointer;
+    margin: 0; /* Bỏ margin mặc định */
+}
+
+/* Style cho con trượt (thumb) của input range - Webkit (Chrome, Safari, Edge mới) */
+input[type="range"].progress-bar-slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 14px; /* Kích thước con trượt */
+    height: 14px;
+    background: var(--text-color, #fff); /* Màu con trượt */
+    border-radius: 50%;
+    cursor: pointer;
+    margin-top: -4.5px; /* Căn giữa con trượt với rãnh (điều chỉnh nếu cần) */
+    /* box-shadow: 0 0 2px rgba(0,0,0,0.5); */ /* (Tùy chọn) Thêm bóng đổ */
+}
+
+/* Style cho con trượt (thumb) của input range - Mozilla (Firefox) */
+input[type="range"].progress-bar-slider::-moz-range-thumb {
+    width: 14px;
+    height: 14px;
+    background: var(--text-color, #fff);
+    border-radius: 50%;
+    cursor: pointer;
+    border: none; /* Bỏ viền mặc định của Firefox */
+}
+
+/* (Tùy chọn) Style cho phần đã chạy của thanh tiến trình nếu trình duyệt hỗ trợ */
+/* Đối với Webkit, thường cần JavaScript để tô màu phần đã chạy. */
+/* Đối với Firefox, có thể dùng ::-moz-range-progress */
+input[type="range"].progress-bar-slider::-moz-range-progress {
+  background-color: var(--primary-color, #8c14fc);
+  border-radius: 5px;
+}
+/* Bạn sẽ cần dùng JavaScript để cập nhật màu cho phần đã chạy trên các trình duyệt Webkit */
+
+
+.volume-controls {
+    /* ... (style cho volume-controls) ... */
+    width: 30%; /* Hoặc một giá trị phù hợp */
+    display: flex;
+    align-items: center;
+    justify-content: flex-end; /* Căn phải */
+    min-width: 120px;
+}
+.volume-controls .volume-btn {
+    /* ... (style cho nút volume của bạn) ... */
+}
+input[type="range"].volume-slider-input {
+    /* Style tương tự như progress-bar-slider nhưng có thể có width khác */
+    width: 80px; /* Hoặc 100px */
+    height: 4px;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 4px;
+    -webkit-appearance: none;
+    appearance: none;
+    outline: none;
+    cursor: pointer;
+    margin-left: 8px;
+}
+input[type="range"].volume-slider-input::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 12px;
+    height: 12px;
+    background: var(--text-color, #fff);
+    border-radius: 50%;
+    cursor: pointer;
+    margin-top: -4px;
+}
+input[type="range"].volume-slider-input::-moz-range-thumb {
+    width: 12px;
+    height: 12px;
+    background: var(--text-color, #fff);
+    border-radius: 50%;
+    cursor: pointer;
+    border: none;
+}
+
+/* CSS cho Pagination (Nên đưa vào file style.css chính của bạn) */
+
+/* 1. Thiết lập cho container ul.pagination */
+.pagination {
+    display: flex; /* Rất quan trọng: Biến ul thành flex container để các li có thể xếp ngang */
+    justify-content: center; /* Căn giữa cụm pagination (bạn đã có class này trong HTML) */
+    align-items: center; /* Căn các item theo chiều dọc, hữu ích nếu chiều cao nút khác nhau */
+    padding-left: 0; /* Loại bỏ padding mặc định của ul */
+    list-style: none; /* Loại bỏ dấu chấm đầu dòng mặc định của ul */
+    margin-top: 1.5rem;
+    margin-bottom: 1.5rem;
+}
+
+/* 2. Thiết lập cho từng page-item (li) */
+.pagination .page-item {
+    /* Không cần display: inline-block hoặc flex ở đây vì ul đã là flex container */
+    margin: 0 4px; /* TẠO KHOẢNG CÁCH ĐỀU NHAU giữa các nút. Điều chỉnh số px nếu cần */
+}
+
+/* 3. Style cho page-link (a hoặc span bên trong li) - Giữ lại và tinh chỉnh */
+.pagination .page-link {
+    color: var(--secondary-text, #9b9b9b);
+    background-color: transparent;
+    border: 1px solid var(--hover-bg, #3a3a3a);
+    /* margin: 0 3px; Xóa margin ở đây, đã chuyển lên .page-item để kiểm soát tốt hơn */
+    border-radius: 0.3rem;
+    padding: 0.5rem 0.85rem; /* Giữ nguyên padding cho kích thước nút */
+    transition: all 0.2s ease-in-out;
+    display: block; /* Đảm bảo link chiếm toàn bộ page-item để padding có tác dụng */
+    position: relative; /* Cần cho z-index của active và hover */
+    text-decoration: none; /* Đảm bảo không có gạch chân không mong muốn */
+}
+
+/* 4. Style cho page-item active */
+.pagination .page-item.active .page-link {
+    z-index: 3;
+    color: var(--text-color, #fff);
+    background-color: var(--primary-color, #7200da);
+    border-color: var(--primary-color, #7200da);
+    font-weight: 600;
+}
+
+/* 5. Style cho page-item disabled */
+.pagination .page-item.disabled .page-link {
+    color: #6c757d;
+    pointer-events: none;
+    background-color: transparent; /* Giữ nền trong suốt */
+    border-color: var(--hover-bg, #2a213a); /* Viền mờ hơn chút */
+}
+
+/* 6. CSS cho dấu ... khi bị disabled (nếu bạn có dấu ...) */
+.pagination .page-item.disabled .page-link.mx-1 { /* .mx-1 là class Bootstrap cho margin ngang */
+    border: none; /* Bỏ viền cho dấu ... */
+    background-color: transparent !important; /* Đảm bảo nền trong suốt */
+}
+
+/* 7. Style cho page-link khi hover */
+.pagination .page-link:hover {
+    z-index: 2;
+    color: var(--text-color, #fff);
+    background-color: var(--hover-bg, #2a213a);
+    border-color: var(--hover-bg, #3a3a3a);
+}
+
+/* 8. Style cho icon bên trong page-link (nếu có) */
+.page-link .fas {
+    font-size: 0.9em;
+    vertical-align: middle; /* Căn icon tốt hơn nếu có text đi kèm */
+    line-height: 1; /* Đảm bảo icon không làm thay đổi chiều cao dòng quá nhiều */
+}
+
+/* 9. Style cho text-muted (nếu bạn dùng ở đâu đó gần pagination) */
+.text-muted {
+    color: var(--secondary-text, #9b9b9b) !important;
+}
+
+
+/* Trong file style.css của bạn */
+
+/* ... (CSS hiện tại của bạn) ... */
+
+/* Style cho PROGRESS BAR SLIDER */
+input[type="range"].progress-bar-slider {
+    flex-grow: 1; /* Thanh tiến trình cần co giãn để chiếm không gian còn lại */
+    -webkit-appearance: none;
+    appearance: none;
+    /* width: 100%; /* Không cần thiết khi có flex-grow: 1 */
+    height: 5px; /* Chiều cao của rãnh trượt cho progress bar */
+    background: rgba(255, 255, 255, 0.2); /* Màu nền ban đầu */
+    border-radius: 5px;
+    outline: none;
+    cursor: pointer;
+    margin: 0; /* Bỏ margin mặc định */
+    padding: 0; /* Đảm bảo không có padding ảnh hưởng */
+}
+
+/* Style cho VOLUME SLIDER INPUT */
+input[type="range"].volume-slider-input {
+    /* KHÔNG CÓ flex-grow: 1; ở đây */
+    -webkit-appearance: none;
+    appearance: none;
+    width: 50px; /* << ĐẶT CHIỀU RỘNG MONG MUỐN CỦA BẠN */
+    height: 4px; /* Có thể bạn muốn chiều cao khác cho volume */
+    background: rgba(255, 255, 255, 0.2); /* Màu nền ban đầu */
+    border-radius: 4px; /* Có thể bạn muốn bo góc khác */
+    outline: none;
+    cursor: pointer;
+    /* margin: 0; */ /* Có thể bạn muốn margin-left để cách nút volume */
+    margin-left: 8px; /* Khoảng cách với nút volume */
+    padding: 0; /* Đảm bảo không có padding */
+}
+
+/* Style cho con trượt (thumb) của progress bar - giữ nguyên hoặc điều chỉnh */
+input[type="range"].progress-bar-slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 14px;
+    height: 14px;
+    background: var(--text-color, #fff);
+    border-radius: 50%;
+    cursor: pointer;
+    margin-top: -4.5px; /* (height_track - height_thumb) / 2  hoặc điều chỉnh cho vừa mắt */
+}
+
+input[type="range"].progress-bar-slider::-moz-range-thumb {
+    width: 14px;
+    height: 14px;
+    background: var(--text-color, #fff);
+    border-radius: 50%;
+    cursor: pointer;
+    border: none;
+}
+
+/* Style cho con trượt (thumb) của volume slider - giữ nguyên hoặc điều chỉnh */
+input[type="range"].volume-slider-input::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 12px; /* Có thể bạn muốn thumb nhỏ hơn cho volume */
+    height: 12px;
+    background: var(--text-color, #fff);
+    border-radius: 50%;
+    cursor: pointer;
+    margin-top: -4px; /* (height_track_volume - height_thumb_volume) / 2 */
+}
+
+input[type="range"].volume-slider-input::-moz-range-thumb {
+    width: 12px;
+    height: 12px;
+    background: var(--text-color, #fff);
+    border-radius: 50%;
+    cursor: pointer;
+    border: none;
+}
+
+input[type="range"].volume-slider-input {
+    width: 80px; /* Hoặc 100px, giữ lại width cụ thể cho volume */
+    height: 4px; /* Chiều cao của rãnh trượt cho volume */
+    /* background: rgba(255, 255, 255, 0.2);  Đã có ở trên hoặc có thể đặt riêng nếu muốn khác */
+    margin-left: 8px;
+}
+
+/* Style cho con trượt (thumb) - Giữ nguyên hoặc điều chỉnh nếu cần */
+input[type="range"].progress-bar-slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 14px;
+    height: 14px;
+    background: var(--text-color, #fff);
+    border-radius: 50%;
+    cursor: pointer;
+    margin-top: -4.5px; /* Điều chỉnh để căn giữa với track height 5px */
+}
+
+input[type="range"].progress-bar-slider::-moz-range-thumb {
+    width: 14px;
+    height: 14px;
+    background: var(--text-color, #fff);
+    border-radius: 50%;
+    cursor: pointer;
+    border: none;
+}
+
+input[type="range"].volume-slider-input::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 12px;
+    height: 12px;
+    background: var(--text-color, #fff);
+    border-radius: 50%;
+    cursor: pointer;
+    margin-top: -4px; /* Điều chỉnh để căn giữa với track height 4px */
+}
+
+input[type="range"].volume-slider-input::-moz-range-thumb {
+    width: 12px;
+    height: 12px;
+    background: var(--text-color, #fff);
+    border-radius: 50%;
+    cursor: pointer;
+    border: none;
+}
+
+/* QUAN TRỌNG: Bỏ các pseudo-element cho track nếu có,
+   vì JavaScript sẽ quản lý background của toàn bộ input.
+   Nếu bạn có ::-webkit-slider-runnable-track hoặc ::-moz-range-track
+   mà đặt background, nó có thể xung đột.
+   Tuy nhiên, việc set background cho toàn bộ input như trên thường là đủ.
+*/
