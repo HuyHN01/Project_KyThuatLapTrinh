@@ -736,6 +736,169 @@ body {
     transform: scale(1.1);
 }
 
+/* MusicWebApp/app/static/css/style.css */
+
+/* ... (CSS hiện tại của bạn cho body, sidebar, main-content, header, player-bar nói chung) ... */
+
+/* CSS cho Player Bar - Phần Controls và Progress Bar */
+.player-bar {
+    /* ... (các style hiện tại của bạn cho player-bar: position, bottom, left, right, height, background-color, display: flex, align-items, padding, z-index, border-top) ... */
+    /* Đảm bảo display: flex và align-items: center cho player-bar nói chung */
+}
+
+.now-playing {
+    /* ... (style cho now-playing) ... */
+    width: 30%; /* Hoặc một giá trị phù hợp */
+    min-width: 180px; /* Tránh bị co quá nhỏ */
+}
+
+.player-controls {
+    display: flex;
+    flex-direction: column; /* Sắp xếp control-buttons và progress-container theo chiều dọc */
+    align-items: center;    /* Căn giữa theo chiều ngang */
+    justify-content: center;/* Căn giữa theo chiều dọc */
+    flex-grow: 1;           /* Cho phép chiếm không gian còn lại ở giữa */
+    margin: 0 15px;         /* Khoảng cách với now-playing và volume-controls */
+}
+
+.control-buttons {
+    display: flex;
+    align-items: center;
+    margin-bottom: 8px; /* Khoảng cách giữa các nút và thanh tiến trình */
+}
+
+.control-buttons .control-btn {
+    /* ... (style cho các nút control của bạn) ... */
+    background: none;
+    border: none;
+    color: var(--text-color, #fff);
+    font-size: 16px; /* Kích thước icon cho prev/next */
+    margin: 0 10px;
+    cursor: pointer;
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    transition: all 0.2s;
+}
+.control-buttons .control-btn.play-pause {
+    font-size: 20px; /* Kích thước lớn hơn cho nút play/pause */
+    /* Tùy chọn: Thêm style riêng cho nút play/pause nếu muốn nó nổi bật hơn */
+    /* background-color: rgba(255, 255, 255, 0.1); */
+}
+.control-buttons .control-btn:hover {
+    /* background-color: var(--hover-bg, #282828); */
+    color: var(--primary-color, #8c14fc);
+}
+
+
+/* ĐỊNH DẠNG CHO PROGRESS CONTAINER VÀ CÁC THÀNH PHẦN BÊN TRONG */
+.progress-container {
+    display: flex;         /* Sắp xếp các item (currentTime, progressBar, totalTime) trên một hàng */
+    align-items: center;   /* Căn giữa các item theo chiều dọc */
+    width: 100%;           /* Chiếm toàn bộ chiều rộng của .player-controls */
+    max-width: 450px;      /* Giới hạn chiều rộng tối đa của thanh tiến trình */
+    gap: 10px;             /* Khoảng cách giữa các item */
+}
+
+.progress-time {
+    font-size: 12px;
+    color: var(--secondary-text, #b3b3b3);
+    min-width: 35px; /* Đảm bảo đủ chỗ cho định dạng mm:ss */
+    text-align: center;
+    user-select: none; /* Tránh việc người dùng vô tình chọn text thời gian */
+}
+
+input[type="range"].progress-bar-slider {
+    flex-grow: 1; /* Cho phép thanh trượt chiếm không gian còn lại */
+    -webkit-appearance: none; /* Bỏ style mặc định của trình duyệt */
+    appearance: none;
+    width: 100%;
+    height: 5px; /* Chiều cao của rãnh trượt */
+    background: rgba(255, 255, 255, 0.2); /* Màu nền của rãnh trượt */
+    border-radius: 5px;
+    outline: none; /* Bỏ viền khi focus */
+    cursor: pointer;
+    margin: 0; /* Bỏ margin mặc định */
+}
+
+/* Style cho con trượt (thumb) của input range - Webkit (Chrome, Safari, Edge mới) */
+input[type="range"].progress-bar-slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 14px; /* Kích thước con trượt */
+    height: 14px;
+    background: var(--text-color, #fff); /* Màu con trượt */
+    border-radius: 50%;
+    cursor: pointer;
+    margin-top: -4.5px; /* Căn giữa con trượt với rãnh (điều chỉnh nếu cần) */
+    /* box-shadow: 0 0 2px rgba(0,0,0,0.5); */ /* (Tùy chọn) Thêm bóng đổ */
+}
+
+/* Style cho con trượt (thumb) của input range - Mozilla (Firefox) */
+input[type="range"].progress-bar-slider::-moz-range-thumb {
+    width: 14px;
+    height: 14px;
+    background: var(--text-color, #fff);
+    border-radius: 50%;
+    cursor: pointer;
+    border: none; /* Bỏ viền mặc định của Firefox */
+}
+
+/* (Tùy chọn) Style cho phần đã chạy của thanh tiến trình nếu trình duyệt hỗ trợ */
+/* Đối với Webkit, thường cần JavaScript để tô màu phần đã chạy. */
+/* Đối với Firefox, có thể dùng ::-moz-range-progress */
+input[type="range"].progress-bar-slider::-moz-range-progress {
+  background-color: var(--primary-color, #8c14fc);
+  border-radius: 5px;
+}
+/* Bạn sẽ cần dùng JavaScript để cập nhật màu cho phần đã chạy trên các trình duyệt Webkit */
+
+
+.volume-controls {
+    /* ... (style cho volume-controls) ... */
+    width: 30%; /* Hoặc một giá trị phù hợp */
+    display: flex;
+    align-items: center;
+    justify-content: flex-end; /* Căn phải */
+    min-width: 120px;
+}
+.volume-controls .volume-btn {
+    /* ... (style cho nút volume của bạn) ... */
+}
+input[type="range"].volume-slider-input {
+    /* Style tương tự như progress-bar-slider nhưng có thể có width khác */
+    width: 80px; /* Hoặc 100px */
+    height: 4px;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 4px;
+    -webkit-appearance: none;
+    appearance: none;
+    outline: none;
+    cursor: pointer;
+    margin-left: 8px;
+}
+input[type="range"].volume-slider-input::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 12px;
+    height: 12px;
+    background: var(--text-color, #fff);
+    border-radius: 50%;
+    cursor: pointer;
+    margin-top: -4px;
+}
+input[type="range"].volume-slider-input::-moz-range-thumb {
+    width: 12px;
+    height: 12px;
+    background: var(--text-color, #fff);
+    border-radius: 50%;
+    cursor: pointer;
+    border: none;
+}
+
 /* CSS cho Pagination (Nên đưa vào file style.css chính của bạn) */
 
 /* 1. Thiết lập cho container ul.pagination */
@@ -811,3 +974,136 @@ body {
 .text-muted {
     color: var(--secondary-text, #9b9b9b) !important;
 }
+
+
+/* Trong file style.css của bạn */
+
+/* ... (CSS hiện tại của bạn) ... */
+
+/* Style cho PROGRESS BAR SLIDER */
+input[type="range"].progress-bar-slider {
+    flex-grow: 1; /* Thanh tiến trình cần co giãn để chiếm không gian còn lại */
+    -webkit-appearance: none;
+    appearance: none;
+    /* width: 100%; /* Không cần thiết khi có flex-grow: 1 */
+    height: 5px; /* Chiều cao của rãnh trượt cho progress bar */
+    background: rgba(255, 255, 255, 0.2); /* Màu nền ban đầu */
+    border-radius: 5px;
+    outline: none;
+    cursor: pointer;
+    margin: 0; /* Bỏ margin mặc định */
+    padding: 0; /* Đảm bảo không có padding ảnh hưởng */
+}
+
+/* Style cho VOLUME SLIDER INPUT */
+input[type="range"].volume-slider-input {
+    /* KHÔNG CÓ flex-grow: 1; ở đây */
+    -webkit-appearance: none;
+    appearance: none;
+    width: 50px; /* << ĐẶT CHIỀU RỘNG MONG MUỐN CỦA BẠN */
+    height: 4px; /* Có thể bạn muốn chiều cao khác cho volume */
+    background: rgba(255, 255, 255, 0.2); /* Màu nền ban đầu */
+    border-radius: 4px; /* Có thể bạn muốn bo góc khác */
+    outline: none;
+    cursor: pointer;
+    /* margin: 0; */ /* Có thể bạn muốn margin-left để cách nút volume */
+    margin-left: 8px; /* Khoảng cách với nút volume */
+    padding: 0; /* Đảm bảo không có padding */
+}
+
+/* Style cho con trượt (thumb) của progress bar - giữ nguyên hoặc điều chỉnh */
+input[type="range"].progress-bar-slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 14px;
+    height: 14px;
+    background: var(--text-color, #fff);
+    border-radius: 50%;
+    cursor: pointer;
+    margin-top: -4.5px; /* (height_track - height_thumb) / 2  hoặc điều chỉnh cho vừa mắt */
+}
+
+input[type="range"].progress-bar-slider::-moz-range-thumb {
+    width: 14px;
+    height: 14px;
+    background: var(--text-color, #fff);
+    border-radius: 50%;
+    cursor: pointer;
+    border: none;
+}
+
+/* Style cho con trượt (thumb) của volume slider - giữ nguyên hoặc điều chỉnh */
+input[type="range"].volume-slider-input::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 12px; /* Có thể bạn muốn thumb nhỏ hơn cho volume */
+    height: 12px;
+    background: var(--text-color, #fff);
+    border-radius: 50%;
+    cursor: pointer;
+    margin-top: -4px; /* (height_track_volume - height_thumb_volume) / 2 */
+}
+
+input[type="range"].volume-slider-input::-moz-range-thumb {
+    width: 12px;
+    height: 12px;
+    background: var(--text-color, #fff);
+    border-radius: 50%;
+    cursor: pointer;
+    border: none;
+}
+
+input[type="range"].volume-slider-input {
+    width: 80px; /* Hoặc 100px, giữ lại width cụ thể cho volume */
+    height: 4px; /* Chiều cao của rãnh trượt cho volume */
+    /* background: rgba(255, 255, 255, 0.2);  Đã có ở trên hoặc có thể đặt riêng nếu muốn khác */
+    margin-left: 8px;
+}
+
+/* Style cho con trượt (thumb) - Giữ nguyên hoặc điều chỉnh nếu cần */
+input[type="range"].progress-bar-slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 14px;
+    height: 14px;
+    background: var(--text-color, #fff);
+    border-radius: 50%;
+    cursor: pointer;
+    margin-top: -4.5px; /* Điều chỉnh để căn giữa với track height 5px */
+}
+
+input[type="range"].progress-bar-slider::-moz-range-thumb {
+    width: 14px;
+    height: 14px;
+    background: var(--text-color, #fff);
+    border-radius: 50%;
+    cursor: pointer;
+    border: none;
+}
+
+input[type="range"].volume-slider-input::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 12px;
+    height: 12px;
+    background: var(--text-color, #fff);
+    border-radius: 50%;
+    cursor: pointer;
+    margin-top: -4px; /* Điều chỉnh để căn giữa với track height 4px */
+}
+
+input[type="range"].volume-slider-input::-moz-range-thumb {
+    width: 12px;
+    height: 12px;
+    background: var(--text-color, #fff);
+    border-radius: 50%;
+    cursor: pointer;
+    border: none;
+}
+
+/* QUAN TRỌNG: Bỏ các pseudo-element cho track nếu có,
+   vì JavaScript sẽ quản lý background của toàn bộ input.
+   Nếu bạn có ::-webkit-slider-runnable-track hoặc ::-moz-range-track
+   mà đặt background, nó có thể xung đột.
+   Tuy nhiên, việc set background cho toàn bộ input như trên thường là đủ.
+*/

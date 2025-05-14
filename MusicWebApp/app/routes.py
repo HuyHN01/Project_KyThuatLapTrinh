@@ -88,7 +88,7 @@ def search():
                            pagination=pagination) # Truyền đối tượng pagination
 
 # Route play_song giữ nguyên như trước (placeholder)
-@main_bp.route('/play/<int:song_id>')
-def play_song(song_id):
-    song = Song.query.get_or_404(song_id)
-    return render_template('music_player_placeholder.html', song=song, title=f"Đang phát: {song.title}")
+# @main_bp.route('/play/<int:song_id>')
+# def play_song(song_id):
+#     song = Song.query.get_or_404(song_id)
+#     return render_template('music_player_placeholder.html', song=song, title=f"Đang phát: {song.title}")
