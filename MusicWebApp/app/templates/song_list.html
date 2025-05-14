@@ -13,26 +13,33 @@
         <div class="song-grid">
             {% for song_item in songs %}
             <div class="song-card">
-                <a href="{{ url_for('main_routes.play_song', song_id=song_item.id) }}" class="song-card-link">
+                {# SỬ DỤNG DATA-ATTRIBUTES ĐỂ LƯU THÔNG TIN BÀI HÁT #}
+                {# Gọi hàm handlePlayTrack và truyền 'this' (chính phần tử div này) #}
+                <div class="song-card-clickable-area"
+                     data-song-id="{{ song_item.id }}"
+                     data-title="{{ song_item.title | e }}"
+                     data-artist="{{ song_item.artist if song_item.artist else 'Nghệ sĩ không rõ' | e }}"
+                     data-image="{{ song_item.image_url if song_item.image_url else url_for('static', filename='images/placeholder_cover_default.png') }}"
+                     data-stream="{{ song_item.stream_url | e if song_item.stream_url else '' }}" {# Đảm bảo stream_url có giá trị hoặc là chuỗi rỗng #}
+                     onclick="handlePlayTrack(this)"
+                     style="cursor: pointer; display: block; text-decoration: none; color: inherit;"
+                     title="Phát {{ song_item.title }}">
                     <div class="song-thumbnail">
                         {% if song_item.image_url %}
-                        <img src="{{ song_item.image_url }}" alt="{{ song_item.title }}">
+                            <img src="{{ song_item.image_url }}" alt="{{ song_item.title }}">
                         {% else %}
-                        <img src="{{ url_for('static', filename='images/placeholder_cover_default.png') }}"
-                            alt="No image available">
+                            <img src="{{ url_for('static', filename='images/placeholder_cover_default.png') }}" alt="Không có ảnh bìa">
                         {% endif %}
                         <div class="play-overlay">
                             <i class="fas fa-play play-btn"></i>
                         </div>
                     </div>
                     <div class="song-details">
-                        <div class="song-title" title="{{ song_item.title }}">{{ song_item.title if song_item.title else
-                            "Không có tiêu đề" }}</div>
-                        <div class="song-artist" title="{{ song_item.artist }}">{{ song_item.artist if song_item.artist
-                            else "Nghệ sĩ không xác định" }}</div>
+                        <div class="song-title" title="{{ song_item.title }}">{{ song_item.title | truncate(30, True) if song_item.title else "Không có tiêu đề" }}</div>
+                        <div class="song-artist" title="{{ song_item.artist }}">{{ song_item.artist | truncate(35, True) if song_item.artist else "Nghệ sĩ không xác định" }}</div>
                     </div>
-                </a>
-            </div>
+                </div> {# Kết thúc song-card-clickable-area #}
+            </div> {# Kết thúc song-card #}
             {% endfor %}
         </div>
         {% else %}
@@ -55,11 +62,12 @@
                 {# Nút Trang Trước (Previous) với Icon #}
                 <li class="page-item {% if not pagination.has_prev %}disabled{% endif %}">
                     <a class="page-link"
-                       href="{{ url_for(request.endpoint, page=pagination.prev_num, query=search_query_display if search_query_display else None, **request.view_args) if pagination.has_prev else '#' }}"
-                       aria-label="Previous"
-                       {% if not pagination.has_prev %}tabindex="-1" aria-disabled="true"{% endif %}>
+                        href="{{ url_for(request.endpoint, page=pagination.prev_num, query=search_query_display if search_query_display else None, **request.view_args) if pagination.has_prev else '#' }}"
+                        aria-label="Previous" {% if not pagination.has_prev %}tabindex="-1" aria-disabled="true" {%
+                        endif %}>
                         <span aria-hidden="true"><i class="fas fa-angle-left"></i></span> {# Hoặc fa-chevron-left #}
-                        {# <span class="sr-only">Previous</span> #} {# Tùy chọn: giữ lại cho screen reader nếu không có text #}
+                        {# <span class="sr-only">Previous</span> #} {# Tùy chọn: giữ lại cho screen reader nếu không có
+                        text #}
                     </a>
                 </li>
 
@@ -69,34 +77,35 @@
                 {% set window = 2 %}
                 {% set edge = 1 %}
 
-                {% for page_num in pagination.iter_pages(left_edge=edge, right_edge=edge, left_current=window, right_current=window + 1) %}
-                    {% if page_num %}
-                        {# Trang hiện tại #}
-                        {% if pagination.page == page_num %}
-                            <li class="page-item active" aria-current="page">
-                                <span class="page-link">{{ page_num }} <span class="sr-only">(current)</span></span>
-                            </li>
-                        {# Các trang khác #}
-                        {% else %}
-                            <li class="page-item">
-                                <a class="page-link"
-                                   href="{{ url_for(request.endpoint, page=page_num, query=search_query_display if search_query_display else None, **request.view_args) }}">
-                                   {{ page_num }}
-                                </a>
-                            </li>
-                        {% endif %}
-                    {% elif loop.previtem is number and loop.nextitem is number %}
-                        {# Hiển thị dấu "..." nếu có khoảng trống giữa các cụm số trang #}
-                        <li class="page-item disabled"><span class="page-link mx-1">&hellip;</span></li>
-                    {% endif %}
+                {% for page_num in pagination.iter_pages(left_edge=edge, right_edge=edge, left_current=window,
+                right_current=window + 1) %}
+                {% if page_num %}
+                {# Trang hiện tại #}
+                {% if pagination.page == page_num %}
+                <li class="page-item active" aria-current="page">
+                    <span class="page-link">{{ page_num }} <span class="sr-only">(current)</span></span>
+                </li>
+                {# Các trang khác #}
+                {% else %}
+                <li class="page-item">
+                    <a class="page-link"
+                        href="{{ url_for(request.endpoint, page=page_num, query=search_query_display if search_query_display else None, **request.view_args) }}">
+                        {{ page_num }}
+                    </a>
+                </li>
+                {% endif %}
+                {% elif loop.previtem is number and loop.nextitem is number %}
+                {# Hiển thị dấu "..." nếu có khoảng trống giữa các cụm số trang #}
+                <li class="page-item disabled"><span class="page-link mx-1">&hellip;</span></li>
+                {% endif %}
                 {% endfor %}
 
                 {# Nút Trang Sau (Next) với Icon #}
                 <li class="page-item {% if not pagination.has_next %}disabled{% endif %}">
                     <a class="page-link"
-                       href="{{ url_for(request.endpoint, page=pagination.next_num, query=search_query_display if search_query_display else None, **request.view_args) if pagination.has_next else '#' }}"
-                       aria-label="Next"
-                       {% if not pagination.has_next %}tabindex="-1" aria-disabled="true"{% endif %}>
+                        href="{{ url_for(request.endpoint, page=pagination.next_num, query=search_query_display if search_query_display else None, **request.view_args) if pagination.has_next else '#' }}"
+                        aria-label="Next" {% if not pagination.has_next %}tabindex="-1" aria-disabled="true" {% endif
+                        %}>
                         <span aria-hidden="true"><i class="fas fa-angle-right"></i></span> {# Hoặc fa-chevron-right #}
                         {# <span class="sr-only">Next</span> #}
                     </a>
