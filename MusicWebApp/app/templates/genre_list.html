@@ -1,0 +1,121 @@
+{% extends "base_layout.html" %}
+{% block title %}{{ title }}{% endblock %}
+
+{% block extra_css %}
+{{ super() if super }}
+<style>
+  .genres-container {
+    margin-top: 1rem;
+    margin-bottom: 3rem;
+    padding: 0 15px;
+  }
+
+  .section-header {
+    margin-bottom: 2rem;
+    padding-bottom: 0.5rem;
+  }
+
+  .section-header h2 {
+    font-size: 2rem;
+    font-weight: 700;
+    color: #fff;
+  }
+
+  .genre-card {
+    border-radius: 12px;
+    transition: all 0.3s ease;
+    height: 100px;
+    overflow: hidden;
+    margin-bottom: 1rem;
+    cursor: pointer;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  }
+
+  .genre-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.4);
+    filter: brightness(1.1);
+  }
+
+  .genre-link {
+    text-decoration: none;
+    color: #fff;
+    display: block;
+    height: 100%;
+    width: 100%;
+  }
+
+  .genre-content {
+    padding: 1rem 1.5rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 100%;
+  }
+
+  .genre-name {
+    font-weight: 600;
+    font-size: 1.2rem;
+    letter-spacing: 0.5px;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+  }
+
+  .song-count {
+    background-color: rgba(0, 0, 0, 0.25);
+    padding: 0.25rem 0.75rem;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    font-weight: 500;
+  }
+
+  /* Các màu sắc khác nhau cho từng thể loại */
+  .genre-card:nth-child(5n+1) {
+    background: linear-gradient(to right, #6a11cb 0%, #2575fc 100%);
+  }
+
+  .genre-card:nth-child(5n+2) {
+    background: linear-gradient(to right, #f83600 0%, #f9d423 100%);
+  }
+
+  .genre-card:nth-child(5n+3) {
+    background: linear-gradient(to right, #11998e 0%, #38ef7d 100%);
+  }
+
+  .genre-card:nth-child(5n+4) {
+    background: linear-gradient(to right, #bc4e9c 0%, #f80759 100%);
+  }
+
+  .genre-card:nth-child(5n+5) {
+    background: linear-gradient(to right, #4facfe 0%, #00f2fe 100%);
+  }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="genres-container">
+  <div class="section-header">
+    <h2>{{ section_title }}</h2>
+  </div>
+
+  {% if genres_data %}
+    <div class="row row-cols-1 row-cols-sm-2 row-cols-lg-5 g-3">
+      {% for genre_name, song_count in genres_data %}
+        <div class="col">
+          <div class="genre-card">
+            <a href="{{ url_for('main_routes.songs_by_genre', genre_name=genre_name) }}" class="genre-link">
+              <div class="genre-content">
+                <div class="genre-name">{{ genre_name.capitalize() if genre_name else "Không xác định" }}</div>
+                <div class="song-count">{{ song_count }} bài hát</div>
+              </div>
+            </a>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  {% else %}
+    <div class="alert alert-dark">
+      Không tìm thấy thông tin thể loại nào trong cơ sở dữ liệu.
+    </div>
+  {% endif %}
+</div>
+{% endblock %}
