@@ -27,7 +27,9 @@
             <span class="nav-text">Khám Phá</span>
         </a>
 
-        <a href="#" class="nav-item"> <i class="fas fa-th-large"></i>
+        {# THÊM LINK NÀY #}
+        <a href="{{ url_for('main_routes.list_genres') }}" class="nav-item {% if request.endpoint == 'main_routes.list_genres' %}active{% endif %}">
+            <i class="fas fa-th-large"></i>
             <span class="nav-text">Chủ Đề & Thể Loại</span>
         </a>
 
