@@ -27,7 +27,8 @@
             <span class="nav-text">Khám Phá</span>
         </a>
 
-        <a href="#" class="nav-item"> <i class="fas fa-th-large"></i>
+        <a href="{{ url_for('main_routes.list_genres') }}" class="nav-item {% if request.endpoint == 'main_routes.list_genres' %}active{% endif %}">
+            <i class="fas fa-th-large"></i>
             <span class="nav-text">Chủ Đề & Thể Loại</span>
         </a>
 
@@ -66,7 +67,7 @@
         </div>
     </div>
 
-    <div class="player-bar" id="playerBar" style="display: none;"> {# Ban đầu ẩn player-bar #}
+    <div class="player-bar" id="playerBar" style="display: none;">
         {% block player_bar_content %}
         <div class="now-playing">
             <div class="now-playing-img">
@@ -83,13 +84,17 @@
 
         <div class="player-controls">
             <div class="control-buttons">
+                {# NÚT TUA LÙI 10 GIÂY #}
+                <button class="control-btn" id="rewindBtn" title="Tua lùi 10s"><i class="fas fa-undo-alt"></i></button>
                 <button class="control-btn" id="prevTrackBtn" title="Trước"><i
                         class="fas fa-step-backward"></i></button>
                 <button class="control-btn play-pause" id="playPauseBtn" title="Phát"><i
                         class="fas fa-play"></i></button>
                 <button class="control-btn" id="nextTrackBtn" title="Sau"><i class="fas fa-step-forward"></i></button>
+                {# NÚT TUA TỚI 10 GIÂY #}
+                <button class="control-btn" id="forwardBtn" title="Tua tới 10s"><i class="fas fa-redo-alt"></i></button>
             </div>
-            <div class="progress-container" id="playerProgressContainer"> {# Thêm ID nếu cần, hoặc dùng class #}
+            <div class="progress-container" id="playerProgressContainer">
                 <span class="progress-time current-time" id="currentTimeEl">0:00</span>
                 <input type="range" class="progress-bar-slider" id="songProgressBar" value="0" min="0" max="100"
                     step="0.1">
